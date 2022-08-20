@@ -39,7 +39,3 @@ jobs:
         with:
           artifacts: "./app/dist/giveaway-o-tron.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: ncipollo/release-action@v1
-        with:
-          artifacts: "./app/dist/giveaway-o-tron/giveaway-o-tron.exe"
-          token: ${{ secrets.GITHUB_TOKEN }}
