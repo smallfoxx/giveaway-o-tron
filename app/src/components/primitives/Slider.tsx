@@ -9,7 +9,10 @@ interface Props {
   step?: number
   onChange: (val: number) => void
   title?: string
+  renderValue?: (val: number) => JSX.Element
 }
+
+export const ONE_S = 1_000
 
 export default function SliderOuter(props: Props) {
   return (
@@ -20,7 +23,9 @@ export default function SliderOuter(props: Props) {
       <div className="px-2 flex-1 flex justify-center items-center">
         <SliderInner {...props} />
       </div>
-      <div className="justify-center items-center text-center flex pr-4">{props.value}</div>
+      <div className="justify-center items-center text-center flex pr-4">
+        {props.renderValue ? props.renderValue(props.value) : props.value}
+      </div>
     </div>
   )
 }

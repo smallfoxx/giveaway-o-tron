@@ -2,13 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  height: 100%;
+html {
+  height: 100vh;
 }
 
 body {
-  @apply bg-gray-800 text-white flex flex-col;
+  @apply bg-gray-800 text-white flex flex-col h-full;
 }
 
 #app {
@@ -25,4 +24,12 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type='number'] {
   -moz-appearance: textfield;
+}
+
+.flex-2 {
+  flex: 2 !important;
+}
+
+.flex-3 {
+  flex: 3 !important;
 }

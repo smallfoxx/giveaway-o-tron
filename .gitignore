@@ -138,3 +138,5 @@ dist
 .vercel
 
 collector/app.js
+temp
+.tmp

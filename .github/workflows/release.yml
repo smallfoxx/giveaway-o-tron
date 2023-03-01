@@ -24,8 +24,10 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install dependencies
         run: yarn
+      - name: Tests
+        run: yarn test
       - name: Get neutralino.js
-        run: npx neu update
+        run: yarn neu-update
       - name: Build
         run: yarn run build
       - name: Archive Release
@@ -37,5 +39,29 @@ jobs:
           path: giveaway-o-tron
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "./app/distk/giveaway-o-tron.zip"
+          artifacts: "./app/dist/giveaway-o-tron.zip,./app/dist/giveaway-o-tron/resources.neu"
           token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@master
+        with:
+          name: resource-file
+          path: ./app/dist/giveaway-o-tron/resources.neu
+  add_resource:
+    needs: build
+    runs-on: windows-latest
+    if: github.actor != 'dependabot[bot]'
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/download-artifact@master
+        with:
+          name: resource-file
+          path: web/public/versions
+      - name: Version File
+        run: yarn generate-version-file
+      - uses: EndBug/add-and-commit@v9
+        with:
+          add: '["web/public/versions", "web/src/version.json"]'
+          message: "chore: Update version files"
+          push: origin HEAD:main
